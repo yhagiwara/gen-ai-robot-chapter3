@@ -4,7 +4,6 @@ from std_msgs.msg import String
 
 import speech_recognition as sr #[*] 音声認識を行うためのモジュールを読み込みます．
 
-
 class Recognition(rclpy.node.Node): #[*] Recognitionクラスをノードとして使うために，Nodeクラスを継承します．
     def __init__(self):
         super().__init__('speech_recognition') #[*] ノードの名前を'speech_recognition'として登録します．
@@ -22,10 +21,12 @@ class Recognition(rclpy.node.Node): #[*] Recognitionクラスをノードとし�
             text = ''
 
             audio_data = self.init_rec.record(source, duration=5) #[*] 収音データを5秒間分取り出せるようにします．
+                
             self.get_logger().info(f'音声認識を行います')
 
             try:
-                text = self.init_rec.recognize_google(audio_data) #[*] Googleの音声認識器に収音データを送り，音声認識の結果を受け取ります．
+                text = self.init_rec.recognize_whisper(audio_data, model="medium", language="japanese") #[*] Whisperに収音データを送り，音声認識の結果を受け取ります．
+                # text = self.init_rec.recognize_google(audio_data) #[*] Googleの音声認識器に収音データを送り，音声認識の結果を受け取ります．
 
             except sr.UnknownValueError:
                 pass
@@ -37,7 +38,6 @@ class Recognition(rclpy.node.Node): #[*] Recognitionクラスをノードとし�
                     f'認識した音声 "{text}" をトピック名 /speech にパブリッシュします')
 
                 self.publisher.publish(msg)
-
 
 def main():
     rclpy.init() #[*] rclpyを通したrosのコミュニケーションが行えるようにします．

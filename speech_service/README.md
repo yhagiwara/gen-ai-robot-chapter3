@@ -17,6 +17,10 @@ pip3 install pyaudio
 ```
 pip3 install SpeechRecognition
 ```
+- 音声認識器のWhisperを扱うためのライブラリを以下のコマンドでインストールします.
+```
+python3 -m pip install git+https://github.com/openai/whisper.git soundfile
+```
 - 音声合成で用いるライブラリをインストールします。
 ```
 pip3 install gTTS
@@ -81,6 +85,7 @@ colcon build
 ## ヘルプ
 - このサンプルプログラムをDockerコンテナで実行する場合，**Ubuntuをホストにする場合のみ動作を確認しています**．Windowsで開発されている方は，VMWareなどのバーチャルマシンにUbuntuをインストールしてサンプルプログラムを実行する事ができます．
 - 音声認識の実行手順（3.1節）において，音声がスピーカーから出力されない場合は，synthesis_mpg123.pyからの実行を試してください．音声合成されたmp3ファイルが出力されるので，そのファイルを再生して確認してください．
+- トピックによる音声認識の実行手順 (3.1.9節)において，Whisperのモデルサイズや認識する言語を変更する場合は，recognition.pyの中にあるrecognize_whisperの引数を変更してください．modelは[https://github.com/openai/whisper#available-models-and-languages](https://github.com/openai/whisper#available-models-and-languages)，languageは[https://github.com/openai/whisper/blob/main/whisper/tokenizer.py](https://github.com/openai/whisper/blob/main/whisper/tokenizer.py)を参照し，使用可能なモデルと言語を記載してください．
 - サービスによるオウム返しの実行手順（3.3.2節）において，音声がスピーカーから出力されない場合は，speech_service_mpg123.pyからの実行を試してください．音声合成されたmp3ファイルが出力されるので，そのファイルを再生して確認してください． 
 
 ## 著者
