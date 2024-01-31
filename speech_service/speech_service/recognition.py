@@ -25,7 +25,7 @@ class Recognition(rclpy.node.Node): #[*] Recognitionクラスをノードとし�
             self.get_logger().info(f'音声認識を行います')
 
             try:
-                text = self.init_rec.recognize_whisper(audio_data, model="medium", language="japanese") #[*] Whisperに収音データを送り，音声認識の結果を受け取ります．
+                text = self.init_rec.recognize_whisper(audio_data, model="medium", language="english") #[*] Whisperに収音データを送り，音声認識の結果を受け取ります．
                 # text = self.init_rec.recognize_google(audio_data) #[*] Googleの音声認識器に収音データを送り，音声認識の結果を受け取ります．
 
             except sr.UnknownValueError:
