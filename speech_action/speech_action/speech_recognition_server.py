@@ -24,8 +24,8 @@ class SpeechRecognitionServer(Node):
     def __init__(self):
         super().__init__('speech_recognition_server')
         self.get_logger().info('音声認識サーバを起動します．')
-        self.lang = 'ja'
-        # self.lang = 'en'
+        # self.lang = 'ja'
+        self.lang = 'en'
         self.recognizer = Recognizer()
         self.goal_handle = None
         self.goal_lock = threading.Lock()

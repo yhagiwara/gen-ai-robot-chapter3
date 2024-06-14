@@ -70,7 +70,8 @@ class SpeechClient(Node):
             text = self.recognition_client.send_goal('')
             if text is not None and text != '':
                 self.get_logger().info(f'入力： {text}')
-                text2 = text + 'だよね'
+                # text2 = text + 'だよね'
+                text2 = text
                 self.get_logger().info(f'出力： {text2}')
                 self.synthesis_client.send_goal(text2)
 

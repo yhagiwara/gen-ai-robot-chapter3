@@ -3,40 +3,6 @@
 ３章のサンプルプログラム  
 音声認識と音声合成を実行するプログラム
 
-## インストール
-- オーディオ関連を扱うためのライブラリを以下のコマンドでインストールします．
-```
-sudo apt install portaudio19-dev
-sudo apt install pulseaudio
-```
-- Pythonのモジュールとして呼びたすために，以下のコマンドを実行します．
-```
-pip3 install pyaudio
-```
-- 音声認識ライブラリを以下のコマンドでインストールします．
-```
-pip3 install SpeechRecognition
-```
-- 音声認識器のWhisperを扱うためのライブラリを以下のコマンドでインストールします.
-```
-python3 -m pip install git+https://github.com/openai/whisper.git soundfile
-```
-- 音声合成で用いるライブラリをインストールします。
-```
-pip3 install gTTS
-sudo apt install mpg123
-pip3 install mpg123
-```
-- サンプルプログラムを以下のコマンドでGitHubからクローンします．
-```
-cd ˜/airobot_ws/src
-git clone https://github.com/AI-Robot-Book/chapter3
-```
-- 以下のコマンドでパッケージをビルドします．
-```
-cd ˜/airobot_ws
-colcon build
-```
 
 ## 実行
 - 音声認識の実行手順（3.1節）

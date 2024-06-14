@@ -14,8 +14,8 @@ class SpeechSynthesisServer(Node):
     def __init__(self):
         super().__init__('speech_synthesis_server')
         self.get_logger().info('音声合成サーバを起動します．')
-        self.lang = 'ja-JP'
-        # self.lang = 'en'
+        # self.lang = 'ja-JP'
+        self.lang = 'en'
         self.out = Out123()
         self.goal_handle = None
         self.goal_lock = threading.Lock()
