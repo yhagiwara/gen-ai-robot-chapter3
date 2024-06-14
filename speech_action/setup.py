@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'speech_service'
+package_name = 'speech_action'
 
 setup(
     name=package_name,
@@ -20,13 +20,11 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'recognition = speech_service.recognition:main',
-            'synthesis = speech_service.synthesis:main',
-            'synthesis_mpg123 = speech_service.synthesis_mpg123:main',
-            'speech_service = speech_service.speech_service:main',
-            'speech_service_mpg123 = speech_service.speech_service_mpg123:main'
-            # 'speech_recognition_client = speech_action.speech_recognition_client:main',
-            # 'speech_recognition_server = speech_action.speech_recognition_server:main',
+            'speech_recognition_client = speech_action.speech_recognition_client:main',
+            'speech_recognition_server = speech_action.speech_recognition_server:main',
+            'speech_synthesis_client = speech_action.speech_synthesis_client:main',
+            'speech_synthesis_server = speech_action.speech_synthesis_server:main',
+            'speech_client = speech_action.speech_client:main'
         ],
     },
 )
