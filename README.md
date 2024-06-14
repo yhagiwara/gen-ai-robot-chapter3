@@ -2,6 +2,43 @@
 ## 概要
 ROS2とPythonで作って学ぶAIロボット入門（出村・萩原・升谷・タン著，講談社）第３章のサンプルプログラムと補足情報などを掲載しています．
 
+
+
+## インストール
+- オーディオ関連を扱うためのライブラリを以下のコマンドでインストールします．
+```
+sudo apt install portaudio19-dev
+sudo apt install pulseaudio
+```
+- Pythonのモジュールとして呼びたすために，以下のコマンドを実行します．
+```
+pip3 install pyaudio
+```
+- 音声認識ライブラリを以下のコマンドでインストールします．
+```
+pip3 install SpeechRecognition
+```
+- 音声認識器のWhisperを扱うためのライブラリを以下のコマンドでインストールします.
+```
+python3 -m pip install git+https://github.com/openai/whisper.git soundfile
+```
+- 音声合成で用いるライブラリをインストールします。
+```
+pip3 install gTTS
+sudo apt install mpg123
+pip3 install mpg123
+```
+- サンプルプログラムを以下のコマンドでGitHubからクローンします．
+```
+cd ˜/airobot_ws/src
+git clone https://github.com/AI-Robot-Book/chapter3
+```
+- 以下のコマンドでパッケージをビルドします．
+```
+cd ˜/airobot_ws
+colcon build
+```
+
 ## ディレクトリ構成
 
 - **[speech_service](https://github.com/AI-Robot-Book/chapter3/tree/master/speech_service):** 音声認識と音声合成のサンプルプログラム
