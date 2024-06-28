@@ -46,6 +46,10 @@
     ```
     ros2 run speech_action speech_synthesis_server
     ```
+  - さらに新しい端末を開いて音声認識サーバを起動します．
+    ```
+    ros2 run speech_action speech_client
+    ```
   - 待機中になるので,Enterを押します
   - マイクに向かって発話します．
   - 途中でキャンセルしたい場合は,cを入力します
