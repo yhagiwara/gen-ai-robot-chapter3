@@ -20,7 +20,7 @@ pip3 install SpeechRecognition
 ```
 - 音声認識器のWhisperを扱うためのライブラリを以下のコマンドでインストールします.
 ```
-python3 -m pip install git+https://github.com/openai/whisper.git soundfile
+pip3 install SpeechRecognition[whisper-local] soundfile
 ```
 - 音声合成で用いるライブラリをインストールします。
 ```
@@ -40,8 +40,9 @@ colcon build
 ```
 
 ## ディレクトリ構成
-
+- **[speech_action](https://github.com/AI-Robot-Book/chapter3/tree/master/speech_action):** 音声認識と音声合成のサンプルプログラム
 - **[speech_service](https://github.com/AI-Robot-Book/chapter3/tree/master/speech_service):** 音声認識と音声合成のサンプルプログラム
+- **[speech_topic](https://github.com/AI-Robot-Book/chapter3/tree/master/speech_topic):** 音声認識と音声合成のサンプルプログラム
    
 ## 補足情報
  - ３章のサンプルプログラムをDockerコンテナで実行する場合，**Ubuntuをホストにする場合のみ動作を確認しています**．Windowsで開発されている方は，VMWareなどのバーチャルマシンにUbuntuをインストールしてサンプルプログラムを実行する事ができます．

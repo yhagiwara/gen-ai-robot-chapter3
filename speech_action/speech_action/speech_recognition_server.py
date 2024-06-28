@@ -76,8 +76,7 @@ class SpeechRecognitionServer(Node):
             try:
                 self.get_logger().info('音声認識')
                 text = self.recognizer.recognize_whisper(audio_data, model="medium", language=self.lang) #[*] Whisperに収音データを送り，音声認識の結果を受け取ります．
-                # text = self.recognizer.recognize_google(
-                #     audio_data, language=self.lang)
+                # text = self.recognizer.recognize_google(audio_data, language=self.lang)
             except RequestError:
                 self.get_logger().info('API無効')
                 return result

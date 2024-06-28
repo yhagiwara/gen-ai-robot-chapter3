@@ -22,6 +22,7 @@ setup(
         'console_scripts': [
             'recognition = speech_topic.recognition:main',
             'synthesys = speech_topic.synthesys:main'
+            'synthesys_mpg123 = speech_topic.synthesys_mpg123:main'
         ],
     },
 )

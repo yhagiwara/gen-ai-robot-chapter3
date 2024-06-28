@@ -40,8 +40,8 @@ class SpeechService(rclpy.node.Node):
                 self.get_logger().info(f'音声認識を行います')
 
                 try:
-                    text = self.init_rec.recognize_google(audio_data)
-                    # text = self.init_rec.recognize_whisper(audio_data, model="medium", language="japanese") #[*] Whisperに収音データを送り，音声認識の結果を受け取ります．
+                    text = self.init_rec.recognize_whisper(audio_data, model="medium", language="japanese") #[*] Whisperに収音データを送り，音声認識の結果を受け取ります．
+                    # text = self.init_rec.recognize_google(audio_data)
                 except sr.UnknownValueError:
                     pass
 

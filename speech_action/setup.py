@@ -24,6 +24,7 @@ setup(
             'speech_recognition_server = speech_action.speech_recognition_server:main',
             'speech_synthesis_client = speech_action.speech_synthesis_client:main',
             'speech_synthesis_server = speech_action.speech_synthesis_server:main',
+            'speech_synthesis_server_mpg123 = speech_action.speech_synthesis_server_mpg123:main',
             'speech_client = speech_action.speech_client:main'
         ],
     },
