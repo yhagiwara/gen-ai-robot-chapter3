@@ -37,6 +37,7 @@ git clone https://github.com/AI-Robot-Book/chapter3
 ```
 cd ˜/airobot_ws
 colcon build
+source install/setup.bash
 ```
 
 ## ディレクトリ構成
