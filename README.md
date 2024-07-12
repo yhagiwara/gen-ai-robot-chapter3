@@ -40,7 +40,7 @@ colcon build
 ```
 
 ## ディレクトリ構成
-- **[speech_action](https://github.com/AI-Robot-Book/chapter3/tree/master/speech_action):** アクション通信による音声認識と音声合成のサンプルプログラム
+- **[speech_action](./speech_action):** アクション通信による音声認識と音声合成のサンプルプログラム
 - **[speech_service](https://github.com/AI-Robot-Book/chapter3/tree/master/speech_service):** サービス通信による音声認識と音声合成のサンプルプログラム
 - **[speech_topic](https://github.com/AI-Robot-Book/chapter3/tree/master/speech_topic):** トピック通信による音声認識と音声合成のサンプルプログラム
    
