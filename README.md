@@ -29,7 +29,7 @@ pip3 install mpg123
 - サンプルプログラムを以下のコマンドでGitHubからクローンします．
 ```
 cd ~/airobot_ws/src
-git clone https://github.com/AI-Robot-Book/chapter3
+git clone https://github.com/AI-Robot-Book-Humble/chapter3
 ```
 - 以下のコマンドでパッケージをビルドします．
 ```
