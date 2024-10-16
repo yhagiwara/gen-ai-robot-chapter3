@@ -2,8 +2,6 @@
 ## 概要
 ROS2とPythonで作って学ぶAIロボット入門（出村・萩原・升谷・タン著，講談社）第３章のサンプルプログラムと補足情報などを掲載しています．
 
-
-
 ## インストール
 - オーディオ関連を扱うためのライブラリを以下のコマンドでインストールします．
 ```
@@ -30,20 +28,20 @@ pip3 install mpg123
 ```
 - サンプルプログラムを以下のコマンドでGitHubからクローンします．
 ```
-cd ˜/airobot_ws/src
-git clone https://github.com/AI-Robot-Book/chapter3
+cd ~/airobot_ws/src
+git clone https://github.com/AI-Robot-Book-Humble/chapter3
 ```
 - 以下のコマンドでパッケージをビルドします．
 ```
-cd ˜/airobot_ws
+cd ~/airobot_ws
 colcon build
 source install/setup.bash
 ```
 
 ## ディレクトリ構成
-- **[speech_action](./speech_action):** アクション通信による音声認識と音声合成のサンプルプログラム
-- **[speech_service](./speech_service):** サービス通信による音声認識と音声合成のサンプルプログラム
-- **[speech_topic](./speech_topic):** トピック通信による音声認識と音声合成のサンプルプログラム
+- **[speech_action](speech_action):** アクション通信による音声認識と音声合成のサンプルプログラム
+- **[speech_service](speech_service):** サービス通信による音声認識と音声合成のサンプルプログラム
+- **[speech_topic](speech_topic):** トピック通信による音声認識と音声合成のサンプルプログラム
    
 ## 補足情報
  - ３章のサンプルプログラムをDockerコンテナで実行する場合，**Ubuntuをホストにする場合のみ動作を確認しています**．Windowsで開発されている方は，VMWareなどのバーチャルマシンにUbuntuをインストールしてサンプルプログラムを実行する事ができます．
