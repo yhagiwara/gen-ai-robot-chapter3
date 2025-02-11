@@ -49,11 +49,11 @@
 萩原　良信
 
 ## 履歴
-- 2022-08-28: 初期版
 - 2024-01-26: 改訂版
+- 2022-08-28: 初期版
 
 ## ライセンス
-Copyright (c) 2022, Yoshinobu Hagiwara, Masaki Ito and Shoichi Hasegawa
+Copyright (c) 2022-2025, Yoshinobu Hagiwara, Masaki Ito and Shoichi Hasegawa
 All rights reserved.
 This project is licensed under the Apache-2.0 license found in the LICENSE file in the root directory of this project.
 
