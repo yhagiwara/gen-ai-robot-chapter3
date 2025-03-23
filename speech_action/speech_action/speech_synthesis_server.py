@@ -5,18 +5,21 @@ from rclpy.action import ActionServer, CancelResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 from airobot_interfaces.action import StringCommand
-from gtts import gTTS
-from io import BytesIO
-from mpg123 import Mpg123, Out123
+from kokoro import KPipeline
+import soundfile as sf
+import simpleaudio as sa
+import io
+import wave
 
 
 class SpeechSynthesisServer(Node):
     def __init__(self):
         super().__init__('speech_synthesis_server')
         self.get_logger().info('音声合成サーバを起動します．')
-        # self.lang = 'ja-JP'
-        self.lang = 'en'
-        self.out = Out123()
+        self.kokoro_pipeline = KPipeline(lang_code='a')
+        # self.pipeline = KPipeline(lang_code='j')
+        self.kokoro_voice = "af_heart"
+        self.kokoro_speed = 1
         self.goal_handle = None
         self.goal_lock = threading.Lock()
         self.execute_lock = threading.Lock()
@@ -46,23 +49,26 @@ class SpeechSynthesisServer(Node):
             if goal_handle.request.command != '':
                 text = goal_handle.request.command
                 self.get_logger().info(f'発話： {text}')
-                tts = gTTS(text, lang=self.lang[:2])
-                fp = BytesIO()
-                tts.write_to_fp(fp)
-                fp.seek(0)
-                mp3 = Mpg123()
-                mp3.feed(fp.read())
-                for frame in mp3.iter_frames(self.out.start):
-                    if not goal_handle.is_active:
-                        self.get_logger().info('中止')
-                        return result
+                kokoro_tts = self.kokoro_pipeline(text, voice=self.kokoro_voice, speed=self.kokoro_speed)
+                _, ps, audio = next(kokoro_tts)
+                self.get_logger().info(f'音素： {ps}')
 
-                    if goal_handle.is_cancel_requested:
-                        goal_handle.canceled()
-                        self.get_logger().info('キャンセル')
-                        return result
+                if not goal_handle.is_active:
+                    self.get_logger().info('中止')
+                    return result
 
-                    self.out.play(frame)
+                if goal_handle.is_cancel_requested:
+                    goal_handle.canceled()
+                    self.get_logger().info('キャンセル')
+                    return result
+                
+                wav_buffer = io.BytesIO()
+                sf.write(wav_buffer, audio, 24000, format='WAV')
+                wav_buffer.seek(0)
+                with wave.open(wav_buffer, 'rb') as wav_reader:
+                    wave_obj = sa.WaveObject.from_wave_read(wav_reader)
+                    play_obj = wave_obj.play()
+                    play_obj.wait_done()
 
                 goal_handle.succeed()
                 result.answer = 'OK'
