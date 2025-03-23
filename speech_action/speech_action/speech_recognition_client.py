@@ -18,6 +18,8 @@ class SpeechRecognitionClient(Node):
         self.get_logger().info('アクションサーバ待機...')
         self.action_client.wait_for_server()
         goal_msg = StringCommand.Goal()
+        initial_prompt = input('初期プロンプトを入力してください(省略する場合はEnterキーを押してください): ') 
+        goal_msg.initial_prompt = initial_prompt if initial_prompt else ''
         self.get_logger().info('ゴール送信...')
         self.send_goal_future = self.action_client.send_goal_async(goal_msg)
         self.send_goal_future.add_done_callback(self.goal_response_callback)
