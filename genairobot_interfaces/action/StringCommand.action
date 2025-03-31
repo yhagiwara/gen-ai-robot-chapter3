@@ -1,0 +1,10 @@
+# Goal
+string command
+string initial_prompt
+ 
+---
+# Result
+string answer
+---
+# Feedback
+string process

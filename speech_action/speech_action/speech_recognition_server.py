@@ -4,7 +4,7 @@ from rclpy.node import Node
 from rclpy.action import ActionServer, CancelResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
-from airobot_interfaces.action import StringCommand
+from genairobot_interfaces.action import StringCommand
 from ctypes import CFUNCTYPE, c_char_p, c_int, c_char_p, c_int, c_char_p, cdll
 from speech_recognition import (
     Recognizer, Microphone, UnknownValueError, RequestError, WaitTimeoutError)
