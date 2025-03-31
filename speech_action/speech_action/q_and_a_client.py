@@ -53,14 +53,16 @@ class StringCommandActionClient:
         self.event.set()
 
 
-class SpeechClient(Node):
+class QandAClient(Node):
     def __init__(self):
-        super().__init__('speech_client')
-        self.get_logger().info('音声対話ノードを起動します．')
+        super().__init__('q_and_a_client')
+        self.get_logger().info('質問応答ノードを起動します．')
         self.recognition_client = StringCommandActionClient(
             self, 'speech_recognition/command')
         self.synthesis_client = StringCommandActionClient(
             self, 'speech_synthesis/command')
+        self.llm_client = StringCommandActionClient(
+            self, 'q_and_a/command')
         self.thread = Thread(target=self.run)
         self.thread.start()
 
@@ -70,16 +72,14 @@ class SpeechClient(Node):
             text = self.recognition_client.send_goal('')
             if text is not None and text != '':
                 self.get_logger().info(f'入力： {text}')
-                # text2 = text + 'だよね'
-                text2 = text
-                self.get_logger().info(f'出力： {text2}')
-                self.synthesis_client.send_goal(text2)
-
-
+                llm_response = self.llm_client.send_goal(text)
+                if llm_response is not None and llm_response.strip() != '':
+                    self.get_logger().info(f'LLM応答： {llm_response}')
+                    self.synthesis_client.send_goal(llm_response)
 
 def main():
     rclpy.init()
-    node = SpeechClient()
+    node = QandAClient()
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:

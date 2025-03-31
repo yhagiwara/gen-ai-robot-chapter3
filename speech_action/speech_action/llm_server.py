@@ -9,10 +9,10 @@ from ollama import chat
 from ollama import ChatResponse
 
 
-class LLMActionServer(Node):
+class LLMServer(Node):
     def __init__(self):
-        super().__init__('llm_action_server')
-        self.get_logger().info('LLMアクションサーバを起動します．')
+        super().__init__('llm_server')
+        self.get_logger().info('LLMサーバを起動します．')
         self.llm_model = 'llama3'
         self.goal_handle = None
         self.goal_lock = threading.Lock()
@@ -53,7 +53,7 @@ class LLMActionServer(Node):
                 response: ChatResponse = chat(model=self.llm_model, messages=[
                     {
                         'role': 'system',
-                        'content': 'From now on, we will have a conversation, so try to make sentences short.'
+                        'content': 'You are a human. Now you are having a conversation, so try to make sentences short.'
                     },
                     {
                         'role': 'user', 
@@ -78,7 +78,7 @@ class LLMActionServer(Node):
 
 def main():
     rclpy.init()
-    node = LLMActionServer()
+    node = LLMServer()
     executor = MultiThreadedExecutor()
     try:
         rclpy.spin(node, executor=executor)

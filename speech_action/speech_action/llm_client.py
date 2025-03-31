@@ -1,4 +1,4 @@
-from threading import Thread, Event
+import threading
 import rclpy
 from rclpy.action import ActionClient
 from rclpy.node import Node
@@ -6,84 +6,76 @@ from action_msgs.msg import GoalStatus
 from airobot_interfaces.action import StringCommand
 
 
-class StringCommandActionClient:
-    def __init__(self, node, name):
-        self.name = name
-        self.logger = node.get_logger()
-        self.action_client = ActionClient(node, StringCommand, name)
-        self.event = Event()
+class LLMClient(Node):
+    def __init__(self):
+        super().__init__('llm_client')
+        self.get_logger().info('LLMクライアントを起動します．')
+        self.goal_handle = None
+        self.action_client = ActionClient(
+            self, StringCommand, 'llm/command')
 
-    def send_goal(self, command: str):
-        self.logger.info(f'{self.name} アクションサーバ待機...')
+    def send_prompt(self, prompt: str):
+        self.get_logger().info('アクションサーバ待機...')
         self.action_client.wait_for_server()
         goal_msg = StringCommand.Goal()
-        goal_msg.command = command
-        self.logger.info(f'{self.name} ゴール送信... command: \'{command}\'')
-        self.event.clear()
+        goal_msg.command = prompt
+        self.get_logger().info(f'プロンプト送信...')
         self.send_goal_future = self.action_client.send_goal_async(goal_msg)
         self.send_goal_future.add_done_callback(self.goal_response_callback)
-        self.action_result = None
-        self.event.wait(20.0)
-        if self.action_result is None:
-            self.logger.info(f'{self.name} タイムアウト')
-            return None
-        else:
-            result = self.action_result.result
-            status = self.action_result.status
-            if status == GoalStatus.STATUS_SUCCEEDED:
-                self.logger.info(f'{self.name} 結果: {result.answer}')
-                self.goal_handle = None
-                return result.answer
-            else:
-                self.logger.info(f'{self.name} 失敗ステータス: {status}')
-                return None
 
     def goal_response_callback(self, future):
         goal_handle = future.result()
         if not goal_handle.accepted:
-            self.logger.info(f'{self.name} ゴールは拒否されました')
+            self.get_logger().info('ゴールは拒否されました')
             return
+
         self.goal_handle = goal_handle
-        self.logger.info(f'{self.name} ゴールは受け付けられました')
+        self.get_logger().info('ゴールは受け付けられました')
         self.get_result_future = goal_handle.get_result_async()
         self.get_result_future.add_done_callback(self.get_result_callback)
 
     def get_result_callback(self, future):
-        self.action_result = future.result()
-        self.event.set()
+        result = future.result().result
+        status = future.result().status
+        if status == GoalStatus.STATUS_SUCCEEDED:
+            self.get_logger().info(f'LLMの応答: {result.answer}')
+            self.goal_handle = None
+        else:
+            self.get_logger().info(f'失敗ステータス: {status}')
 
+    def cancel_done(self, future):
+        cancel_response = future.result()
+        if len(cancel_response.goals_canceling) > 0:
+            self.get_logger().info('キャンセル成功')
+            self.goal_handle = None
+        else:
+            self.get_logger().info('キャンセル失敗')
+    def cancel(self):
+        if self.goal_handle is None:
+            self.get_logger().info('キャンセル対象なし')
+            return
+        self.get_logger().info('キャンセル')
+        future = self.goal_handle.cancel_goal_async()
+        future.add_done_callback(self.cancel_done)
 
-class LLMClient(Node):
-    def __init__(self):
-        super().__init__('speech_client')
-        self.get_logger().info('音声対話ノードを起動します．')
-        self.recognition_client = StringCommandActionClient(
-            self, 'speech_recognition/command')
-        self.synthesis_client = StringCommandActionClient(
-            self, 'speech_synthesis/command')
-        self.llm_client = StringCommandActionClient(
-            self, 'llm/command')
-        self.thread = Thread(target=self.run)
-        self.thread.start()
-
-    def run(self):
-        self.running = True
-        while self.running:
-            text = self.recognition_client.send_goal('')
-            if text is not None and text != '':
-                self.get_logger().info(f'入力： {text}')
-                llm_response = self.llm_client.send_goal(text)
-                if llm_response is not None and llm_response.strip() != '':
-                    self.get_logger().info(f'LLM応答： {llm_response}')
-                    self.synthesis_client.send_goal(llm_response)
 
 def main():
+    # ROSクライアントの初期化
     rclpy.init()
     node = LLMClient()
+
+    # 別のスレッドでrclpy.spin()を実行する
+    thread = threading.Thread(target=rclpy.spin, args=(node,))
+    thread.start()
+
     try:
-        rclpy.spin(node)
+        while True:
+            prompt = input('> ')
+            if prompt == "":
+                node.cancel()
+            else:
+                node.send_prompt(prompt)
     except KeyboardInterrupt:
-        node.running = False
         pass
 
     rclpy.try_shutdown()

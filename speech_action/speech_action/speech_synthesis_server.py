@@ -50,8 +50,7 @@ class SpeechSynthesisServer(Node):
                 text = goal_handle.request.command
                 self.get_logger().info(f'発話： {text}')
                 kokoro_tts = self.kokoro_pipeline(text, voice=self.kokoro_voice, speed=self.kokoro_speed)
-                _, ps, audio = next(kokoro_tts)
-                self.get_logger().info(f'音素： {ps}')
+                _, _, audio = next(kokoro_tts)
 
                 if not goal_handle.is_active:
                     self.get_logger().info('中止')
