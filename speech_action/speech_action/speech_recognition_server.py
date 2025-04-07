@@ -9,7 +9,6 @@ from ctypes import CFUNCTYPE, c_char_p, c_int, c_char_p, c_int, c_char_p, cdll
 from speech_recognition import (
     Recognizer, Microphone, UnknownValueError, RequestError, WaitTimeoutError)
 
-
 # pyaudioの警告表示抑制
 # https://stackoverflow.com/questions/7088672/pyaudio-working-but-spits-out-error-messages-each-time
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
@@ -18,6 +17,7 @@ def py_error_handler(filename, line, function, err, fmt):
 c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
 asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)
+
 
 
 class SpeechRecognitionServer(Node):
@@ -58,7 +58,7 @@ class SpeechRecognitionServer(Node):
                 self.recognizer.adjust_for_ambient_noise(source)
                 try:
                     audio_data = self.recognizer.listen(
-                        source, timeout=20.0, phrase_time_limit=30.0)
+                        source, timeout=10.0, phrase_time_limit=10.0)
                 except WaitTimeoutError:
                     self.get_logger().info('タイムアウト')
                     return result
@@ -75,10 +75,10 @@ class SpeechRecognitionServer(Node):
             text = ''
             try:
                 self.get_logger().info('音声認識')
-
-                initial_prompt = goal_handle.request.initial_prompt  # Get initial prompt from the goal
-                text = self.recognizer.recognize_whisper(audio_data, model="medium", language=self.lang, initial_prompt=initial_prompt) if initial_prompt else \
-                    self.recognizer.recognize_whisper(audio_data, model="medium", language=self.lang) #[*] Whisperに収音データを送り，音声認識の結果を受け取ります．
+                initial_prompt = goal_handle.request.command if goal_handle.request.command else ''
+                # モデル選択：ここでモデルサイズを選ぶ (例: model="small")
+                text = self.recognizer.recognize_whisper(audio_data, model="small", language=self.lang, initial_prompt=initial_prompt) if initial_prompt else \
+                    self.recognizer.recognize_whisper(audio_data, model="small", language=self.lang) #[*] Whisperに収音データを送り，音声認識の結果を受け取ります．
                 # text = self.recognizer.recognize_google(audio_data, language=self.lang)
             except RequestError:
                 self.get_logger().info('API無効')
