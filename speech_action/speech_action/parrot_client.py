@@ -76,7 +76,6 @@ class ParrotClient(Node):
                 self.synthesis_client.send_goal(text2)
 
 
-
 def main():
     rclpy.init()
     node = ParrotClient()

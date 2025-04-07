@@ -77,6 +77,7 @@ class QandAClient(Node):
                     self.get_logger().info(f'LLM応答： {llm_response}')
                     self.synthesis_client.send_goal(llm_response)
 
+
 def main():
     rclpy.init()
     node = QandAClient()
