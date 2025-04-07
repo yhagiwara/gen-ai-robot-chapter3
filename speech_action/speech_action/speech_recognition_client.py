@@ -9,6 +9,7 @@ from genairobot_interfaces.action import StringCommand
 class SpeechRecognitionClient(Node):
     def __init__(self):
         super().__init__('speech_recognition_client')
+        self.initial_prompt = ''
         self.get_logger().info('音声認識クライアントを起動します．')
         self.goal_handle = None
         self.action_client = ActionClient(
@@ -17,9 +18,9 @@ class SpeechRecognitionClient(Node):
     def hear(self):
         self.get_logger().info('アクションサーバ待機...')
         self.action_client.wait_for_server()
-        goal_msg = StringCommand.Goal()
         initial_prompt = input('初期プロンプトを入力してください(省略する場合はEnterキーを押してください): ') 
-        goal_msg.initial_prompt = initial_prompt if initial_prompt else ''
+        goal_msg = StringCommand.Goal()
+        goal_msg.command = initial_prompt if initial_prompt else self.initial_prompt
         self.get_logger().info('ゴール送信...')
         self.send_goal_future = self.action_client.send_goal_async(goal_msg)
         self.send_goal_future.add_done_callback(self.goal_response_callback)
@@ -71,15 +72,13 @@ def main():
     thread = threading.Thread(target=rclpy.spin, args=(node,))
     threading.excepthook = lambda x: ()
     thread.start()
-
+    node.hear()
     try:
         while True:
             s = input('> ')
-            if s == '':
-                node.hear()
-            elif s == 'c':
+            if s == 'c':
                 node.cancel()
-            else:
+            elif s != '':
                 print('無効なコマンドです')
     except KeyboardInterrupt:
         pass
