@@ -22,9 +22,22 @@ pip3 install SpeechRecognition[whisper-local] soundfile
 ```
 - 音声合成で用いるライブラリをインストールします。
 ```
-pip3 install gTTS
-sudo apt install mpg123
-pip3 install mpg123
+pip3 install kokoro
+sudo apt-get install espeak-ng
+pip3 install soundfile
+pip3 install simpleaudio
+```
+- 応答文生成で用いるライブラリをインストールします。
+```
+sudo apt install curl
+curl -fsSL https://ollama.com/install.sh | sh
+```
+- LLMのモデルをダウンロードします．
+```
+ollama serve
+
+# 別の端末で
+ollama pull llama3
 ```
 - サンプルプログラムを以下のコマンドでGitHubからクローンします．
 ```
