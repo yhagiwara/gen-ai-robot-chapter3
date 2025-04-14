@@ -5,21 +5,32 @@
 
 
 ## 実行
-- 音声認識の実行手順（3.1節）
-  - 端末を開いて /speech トピックへパブリッシュしたデータを見られるようにします．
-    ```
-    ros2 topic echo /speech
-    ```
-  - 新しい端末を開いて音声認識サーバを起動します．
+
+- 音声認識の実行手順（3.1.4節）
+  - 音声認識サーバを起動します。
     ```
     ros2 run speech_action speech_recognition_server
     ```
-  - さらに新しい端末を開いて音声認識クライアントを起動します．
+  - 新しい端末を開き、音声認識クライアントを起動します。
     ```
     ros2 run speech_action speech_recognition_client
     ```
-  - 待機中になるので,Enterを押します
-  - マイクに向かって発話します．
+  - クライアントが起動すると、初期プロンプトの入力を求められます。ここでは何も入力せずに Enter を押します
+  - マイクに向かって「Bring me a bottle from kitchen.」などの音声指示を発話してください。
+  - 途中でキャンセルしたい場合は,cを入力します
+
+
+- 音声認識のゼロショット学習（3.1.5節）
+  - 音声認識サーバを起動します。
+    ```
+    ros2 run speech_action speech_recognition_server
+    ```
+  - 新しい端末を開き、音声認識クライアントを起動します。
+    ```
+    ros2 run speech_action speech_recognition_client
+    ```
+  - クライアントが起動すると、初期プロンプトの入力を求められます。ここで「Hikonyan」と入力し、Enter を押します。
+  - マイクに向かって「Bring me the Hikonyan.」と発話してください。
   - 途中でキャンセルしたい場合は,cを入力します
   
 - 音声合成の実行手順（3.2.4節）
