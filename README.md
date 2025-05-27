@@ -41,12 +41,12 @@ ollama pull llama3
 ```
 - サンプルプログラムを以下のコマンドでGitHubからクローンします．
 ```
-cd ~/airobot_ws/src
+cd ~/athome_ws/src
 git clone https://github.com/AI-Robot-Book-Humble/chapter3
 ```
 - 以下のコマンドでパッケージをビルドします．
 ```
-cd ~/airobot_ws
+cd ~/athome_ws
 colcon build
 source install/setup.bash
 ```
