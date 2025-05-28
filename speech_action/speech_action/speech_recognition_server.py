@@ -4,7 +4,7 @@ from rclpy.node import Node
 from rclpy.action import ActionServer, CancelResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
-from genairobot_interfaces.action import StringCommand
+#from (#Change this in the future) import StringCommand
 from ctypes import CFUNCTYPE, c_char_p, c_int, c_char_p, c_int, c_char_p, cdll
 from speech_recognition import (
     Recognizer, Microphone, UnknownValueError, RequestError, WaitTimeoutError)
@@ -12,8 +12,7 @@ from speech_recognition import (
 # pyaudioの警告表示抑制
 # https://stackoverflow.com/questions/7088672/pyaudio-working-but-spits-out-error-messages-each-time
 ERROR_HANDLER_FUNC = CFUNCTYPE(None, c_char_p, c_int, c_char_p, c_int, c_char_p)
-def py_error_handler(filename, line, function, err, fmt):
-    pass
+def py_error_handler(filename, line, functio
 c_error_handler = ERROR_HANDLER_FUNC(py_error_handler)
 asound = cdll.LoadLibrary('libasound.so')
 asound.snd_lib_error_set_handler(c_error_handler)

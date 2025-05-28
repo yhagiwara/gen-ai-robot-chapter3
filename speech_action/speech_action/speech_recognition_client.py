@@ -3,7 +3,7 @@ import rclpy
 from rclpy.action import ActionClient
 from rclpy.node import Node
 from action_msgs.msg import GoalStatus
-from genairobot_interfaces.action import StringCommand
+#from (#Change this in the future) import StringCommand
 
 
 class SpeechRecognitionClient(Node):
