@@ -119,7 +119,7 @@
 - 2025-04-15: 初期版
 
 ## ライセンス
-Copyright (c) 2025, Yoshinobu Hagiwara, Lucas da Mota Bruno　and　Jiahao Sim
+Copyright (c) 2025, Yoshinobu Hagiwara, Lucas da Mota Bruno and Jiahao Sim \
 All rights reserved.
 This project is licensed under the Apache-2.0 license found in the LICENSE file in the root directory of this project.
 
